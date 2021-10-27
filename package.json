@@ -1,0 +1,41 @@
+{
+  "name": "findium",
+  "version": "0.0.1",
+  "description": "A CLI and Node.js library for getting, displaying and store Google search results",
+  "keywords": [
+    "google",
+    "search"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/webdevium/findium.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Vano Devium",
+    "email": "vano@devium.me",
+    "url": "https://www.devium.me"
+  },
+  "main": "./lib/main.js",
+  "bin": "./lib/app.js",
+  "scripts": {
+    "build": "babel src -d lib",
+    "lint": "prettier -w src tests/*.js",
+    "prepublishOnly": "npm run build && npm test",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "cheerio": "^1.0.0-rc.10",
+    "colors": "^1.4.0",
+    "command-line-args": "^5.2.0",
+    "ora": "^5.4.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.15.7",
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "jest": "^27.3.1",
+    "prettier": "2.4.1"
+  }
+}
