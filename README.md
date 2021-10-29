@@ -1,4 +1,4 @@
-# findium [![NPM version](https://img.shields.io/npm/v/findium.svg)](https://www.npmjs.com/package/findium) ![NPM](https://img.shields.io/npm/l/findium) ![Travis](https://img.shields.io/travis/com/webdevium/findium)
+# findium [![NPM version](https://img.shields.io/npm/v/findium.svg)](https://www.npmjs.com/package/findium) ![NPM](https://img.shields.io/npm/l/findium.svg) ![Travis](https://img.shields.io/travis/com/webdevium/findium.svg)
 
 A simple library for converting google search results to JSON output.
 
