@@ -1,6 +1,6 @@
 {
   "name": "findium",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A CLI and Node.js library for getting, displaying and store Google search results",
   "keywords": [
     "google",
@@ -17,9 +17,10 @@
     "url": "https://www.devium.me"
   },
   "main": "./lib/main.js",
+  "types": "./types.d.ts",
   "bin": "./lib/app.js",
   "scripts": {
-    "build": "babel src -d lib",
+    "build": "babel src -d lib --no-comments",
     "lint": "prettier -w src tests/*.js",
     "prepublishOnly": "npm run build && npm test",
     "test": "jest"
@@ -29,6 +30,7 @@
     "cheerio": "^1.0.0-rc.10",
     "colors": "^1.4.0",
     "command-line-args": "^5.2.0",
+    "open": "^8.4.0",
     "ora": "^5.4.1"
   },
   "devDependencies": {

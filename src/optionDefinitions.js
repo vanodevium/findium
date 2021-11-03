@@ -9,29 +9,14 @@ const optionDefinitions = [
   // with --output (-o) command when saving results to a file
   { name: "no-display", alias: "n", type: Boolean },
 
-  // name of the html file if you want to save the actual response from the
-  // html request
-  { name: "save", alias: "s", type: String },
-
   // number of search results to be returned
   { name: "limit", alias: "l", type: Number },
 
   // enable pagination by choosing which result to start at
   { name: "start", type: Number },
 
-  // console.log useful statements to show what's currently taking place
-  { name: "verbose", alias: "v", type: Boolean },
-
-  // once results are returned, show them in an interactive prompt where user
-  // can scroll through them
-  { name: "interactive", alias: "i", type: Boolean },
-
   // only display the URLs, instead of the titles and snippets
   { name: "only-urls", alias: "u", type: Boolean },
-
-  // only takes effect when interactive (-i) flag is set as well, will bold
-  // test in results that matched the query
-  { name: "bold-matching-text", alias: "b", type: Boolean },
 
   // option to open the first X number of results directly in browser
   // (only tested on Mac!).

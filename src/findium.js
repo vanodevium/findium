@@ -1,11 +1,9 @@
-/* eslint-disable no-console */
-/* eslint-disable array-callback-return */
-const request = require("axios");
 const fs = require("fs");
+const request = require("axios");
 const querystring = require("querystring");
 const cheerio = require("cheerio");
+const openModule = require("open");
 require("colors");
-const { exec } = require("child_process");
 
 const {
   getDefaultRequestOptions,
@@ -33,24 +31,24 @@ export function openInBrowser(open, results) {
   if (open !== undefined) {
     // open is the first X number of links to open
     results.slice(0, open).forEach((result) => {
-      exec(`open ${result.link}`, errorTryingToOpen);
+      try {
+        openModule(result.link);
+      } catch (e) {
+        errorTryingToOpen(e);
+      }
     });
   }
 }
 
-export function getSnippet(elem) {
-  // recursive function to get "all" the returned data from Google
-  function findData(child) {
-    if (!child.data) {
-      return child.children.map((c) => c.data || findData(c));
-    }
-    return child.data;
+function findData(child) {
+  if (!child.data) {
+    return child.children.map((c) => c.data || findData(c));
   }
+  return child.data;
+}
 
-  // Issue with linter wanting "new" before "Array"
-  // in this case, the casting is legit, we don't want a new array
-  // eslint-disable-next-line
-  return elem.children && elem.children.length > 0
+export function getSnippet(elem) {
+  return elem.children && elem.children.length
     ? elem.children.map((child) => Array(findData(child)).join("")).join("")
     : "";
 }
@@ -145,6 +143,24 @@ export function getResults({
   return { results, stats };
 }
 
+/**
+ * @typedef {Object} GetResponseParams
+ * @property {string} fromFile
+ * @property {string} fromString
+ * @property {Object} options
+ * @property {string} htmlFileOutputPath
+ * @property {string} query
+ * @property {number} limit
+ * @property {string} userAgent
+ * @property {number} start
+ * @property {string[]|string} include-sites
+ * @property {string[]|string} exclude-sites
+ */
+
+/**
+ * @param {GetResponseParams}
+ * @returns {Promise<{"body": string}>}
+ */
 export function getResponse({
   fromFile: filePath,
   fromString,
@@ -157,7 +173,6 @@ export function getResponse({
   "include-sites": includeSites,
   "exclude-sites": excludeSites,
 }) {
-  // eslint-disable-next-line consistent-return
   return new Promise((resolve, reject) => {
     if (filePath) {
       fs.readFile(filePath, (err, data) => {
@@ -191,7 +206,49 @@ export function getResponse({
   });
 }
 
-function findium(config) {
+/**
+ * @typedef {Object} SearchResult
+ * @property {string} title
+ * @property {string} link
+ * @property {string} snippet
+ */
+
+/**
+ * @typedef {Object} SearchResultOnlyURLs
+ * @property {string} link
+ */
+
+/**
+ * @typedef {Object} FindiumConfig
+ * @property {string} output
+ * @property {boolean} open
+ * @property {boolean} returnHtmlBody
+ * @property {string} titleSelector
+ * @property {string} linkSelector
+ * @property {string} snippetSelector
+ * @property {string} resultStatsSelector
+ * @property {string} cursorSelector
+ * @property {number} start
+ * @property {boolean} diagnostics
+ * @property {boolean} no-display
+ * @property {boolean} only-urls
+ * @property {boolean} disableConsole
+ * @property {string} filePath
+ * @property {string} fromString
+ * @property {Object} options
+ * @property {string} htmlFileOutputPath
+ * @property {string} query
+ * @property {number} limit
+ * @property {string} userAgent
+ * @property {string[]|string} include-sites
+ * @property {string[]|string} exclude-sites
+ */
+
+/**
+ * @param {FindiumConfig} config
+ * @returns {Promise<SearchResult[]|SearchResultOnlyURLs[]>}
+ */
+export default function findium(config) {
   const {
     output,
     open,
@@ -243,5 +300,3 @@ function findium(config) {
       .catch(reject);
   });
 }
-
-export default findium;

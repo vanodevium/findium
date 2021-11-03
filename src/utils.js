@@ -1,6 +1,3 @@
-/* eslint-disable no-extra-parens */
-/* eslint-disable no-console */
-
 const fs = require("fs");
 
 const {
@@ -13,15 +10,18 @@ const {
   FINDIUM_EXCLUDE_SITES = "",
 } = process.env;
 
-// NOTE:
-// I chose the User-Agent value from http://www.browser-info.net/useragents
-// Not setting one causes Google search to not display results
 const defaultUserAgent =
   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:34.0) Gecko/20100101 Firefox/34.0";
 
 const defaultLimit = 10;
 const defaultStart = 0;
 
+/**
+ * @param {string} query
+ * @param {string[]|string} includeSites
+ * @param {string[]|string} excludeSites
+ * @returns {string}
+ */
 const getFullQuery = (
   query,
   includeSites = FINDIUM_INCLUDE_SITES,
@@ -45,6 +45,20 @@ const includeOrExclude = (sites, include = true) => {
     .join(` ${logical} `);
 };
 
+/**
+ * @typedef {Object} DefaultRequestOptionsParams
+ * @property {number} limit
+ * @property {string} query
+ * @property {string} userAgent
+ * @property {number} start
+ * @property {string[]|string} includeSites
+ * @property {string[]|string} excludeSites
+ */
+
+/**
+ * @param {DefaultRequestOptionsParams}
+ * @returns {Object}
+ */
 const getDefaultRequestOptions = ({
   limit,
   query,
@@ -106,7 +120,7 @@ const saveToFile = (output, results) => {
 
 const saveResponse = (response, htmlFileOutputPath) => {
   if (htmlFileOutputPath) {
-    fs.writeFile(htmlFileOutputPath, response.body, () => {
+    fs.writeFile(htmlFileOutputPath, response.data, () => {
       console.log(`Html file saved to ${htmlFileOutputPath}`);
     });
   }

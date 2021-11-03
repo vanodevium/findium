@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { exec } from "child_process";
+import open from "open";
 import { readFileSync, readFile } from "fs";
 import axios from "axios";
 import path from "path";
@@ -21,9 +21,7 @@ global.console = {
   log: jest.fn(),
 };
 
-jest.mock("child_process", () => ({
-  exec: jest.fn(() => {}),
-}));
+jest.mock("open", () => jest.fn(() => {}));
 
 jest.mock("../lib/utils", () => ({
   ...jest.requireActual("../lib/utils"),
@@ -55,15 +53,15 @@ describe("errorTryingToOpen", () => {
 
 describe("openInBrowser", () => {
   it('does not call exec when "open" is undefined', () => {
-    exec.mockClear();
+    open.mockClear();
     openInBrowser(undefined);
-    expect(exec).not.toHaveBeenCalled();
+    expect(open).not.toHaveBeenCalled();
   });
 
   it('calls exec results.slice(0, open).length times when "open" is > 0', () => {
-    exec.mockClear();
+    open.mockClear();
     openInBrowser(3, [{ link: "" }, { link: "" }, { link: "" }]);
-    expect(exec).toHaveBeenCalledTimes(3);
+    expect(open).toHaveBeenCalledTimes(3);
   });
 });
 

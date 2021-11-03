@@ -32,17 +32,9 @@ A simple library for converting google search results to JSON output.
 - `--limit`: number of search results to be returned
 - `--only-urls`: only display the URLs, instead of the titles and snippets
 - `--output`: name of the JSON file to save results to
-- `--no-display`: prevent results from appearing in the terminal output. Should only be used with `--output` (-o)
-  command when saving results to a file
-- `--save`: name of the html file if you want to save the actual response from the html request (useful for debugging
-  purposes)
-- `--verbose`: console.log useful statements to show what's currently taking place
-- `--interactive`: once results are returned, show them in an interactive prompt where user can scroll through them
-- `--bold-matching-text`: only takes effect when interactive (-i) flag is set as well, will bold test in results that
-  matched the query
+- `--htmlFileOutputPath`: name of the HTML file to save results to
+- `--no-display`: prevent results from terminal output. Should only be used when saving results to a file
 - `--open`: opens the first X number of results in the browser after finishing query
-- `--disableConsole`: intended to be used with programmatic use, so that the color-coded search results are not
-  displayed in the terminal (via console.log) when not wanted.
 
 ### Use as a library
 

@@ -1,7 +1,5 @@
 #! /usr/bin/env node
 
-/* eslint-disable no-console */
-
 const ora = require("ora");
 
 const preloader = ora({ text: "Loading results", color: "cyan" }).start();
@@ -19,5 +17,8 @@ if (!validation.valid) {
     .then(() => {
       preloader.stop().clear();
     })
-    .catch(console.error);
+    .catch((e) => {
+      preloader.stop().clear();
+      console.log(e);
+    });
 }
