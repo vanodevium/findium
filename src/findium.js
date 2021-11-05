@@ -1,3 +1,5 @@
+import { getNextPageSelector } from "./utils";
+
 const fs = require("fs");
 const request = require("axios");
 const querystring = require("querystring");
@@ -10,8 +12,6 @@ const {
   getTitleSelector,
   getLinkSelector,
   getSnippetSelector,
-  getResultStatsSelector,
-  getResultCursorSelector,
   logIt,
   saveToFile,
   saveResponse,
@@ -87,8 +87,7 @@ export function getResults({
   titleSelector,
   linkSelector,
   snippetSelector,
-  resultStatsSelector,
-  cursorSelector,
+  nextPageSelector,
 }) {
   const $ = cheerio.load(data);
   let results = [];
@@ -125,20 +124,12 @@ export function getResults({
     display(results, disableConsole, onlyUrls);
   }
 
-  const resultStats =
-    $(getResultStatsSelector(resultStatsSelector)).html() || "";
-  const approximateResults = (
-    (resultStats.split(" results") || [""])[0].split("About ")[1] || ""
-  ).replace(",", "");
-  const seconds = parseFloat(
-    (resultStats.split(" (")[1] || "").split(" seconds")[0]
-  );
-  const cursor = $(getResultCursorSelector(cursorSelector)).html() || "";
-  const page = parseInt(cursor.split("</span>")[1], 10);
+  const hasNextPage = !!$(getNextPageSelector(nextPageSelector)).find(
+    'a:contains(">")'
+  ).length;
+
   const stats = {
-    page,
-    approximateResults,
-    seconds,
+    hasNextPage,
   };
   return { results, stats };
 }
@@ -219,6 +210,17 @@ export function getResponse({
  */
 
 /**
+ * @typedef {Object} SearchResultStats
+ * @property {boolean} hasNextPage
+ */
+
+/**
+ * @typedef {Object} SearchResultContainer
+ * @property {SearchResult[]|SearchResultOnlyURLs[]} results
+ * @property {SearchResultStats} stats
+ */
+
+/**
  * @typedef {Object} FindiumConfig
  * @property {string} output
  * @property {boolean} open
@@ -246,7 +248,7 @@ export function getResponse({
 
 /**
  * @param {FindiumConfig} config
- * @returns {Promise<SearchResult[]|SearchResultOnlyURLs[]>}
+ * @returns {Promise<SearchResult[]|SearchResultOnlyURLs[]|SearchResultContainer>}
  */
 export default function findium(config) {
   const {

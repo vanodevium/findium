@@ -6,7 +6,15 @@ export type SearchResult = {
 export type SearchResultOnlyURLs = {
     link: string;
 };
+export type SearchResultStats = {
+    hasNextPage: boolean;
+};
+export type SearchResultContainer = {
+    results: SearchResult[] | SearchResultOnlyURLs[];
+    stats: SearchResultStats;
+};
 export type FindiumConfig = {
+    query?: string;
     output?: string;
     open?: boolean;
     returnHtmlBody?: boolean;
@@ -24,11 +32,10 @@ export type FindiumConfig = {
     fromString?: string;
     options?: any;
     htmlFileOutputPath?: string;
-    query?: string;
     limit?: number;
     userAgent?: string;
     "include-sites"?: string[] | string;
     "exclude-sites"?: string[] | string;
 };
 
-export default function findium(config: FindiumConfig): Promise<SearchResult[] | SearchResultOnlyURLs[]>;
+export default function findium(config: FindiumConfig): Promise<SearchResult[] | SearchResultOnlyURLs[] | SearchResultContainer>;

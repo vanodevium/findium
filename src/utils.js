@@ -6,6 +6,7 @@ const {
   FINDIUM_SNIPPET_SELECTOR,
   FINDIUM_RESULT_STATS_SELECTOR,
   FINDIUM_CURSOR_SELECTOR,
+  FINDIUM_NEXT_PAGE_SELECTOR,
   FINDIUM_INCLUDE_SITES = "",
   FINDIUM_EXCLUDE_SITES = "",
 } = process.env;
@@ -84,6 +85,7 @@ const snippetSelector =
   "#main > div > div > div > div:not(.v9i61e) > div.AP7Wnd";
 const resultStatsSelector = "#resultStats";
 const cursorSelector = "#nav > tbody > tr > td.cur";
+const nextPageSelector = "#main > footer > div:nth-child(1) > div > div";
 
 const getTitleSelector = (passedValue) =>
   passedValue || FINDIUM_TITLE_SELECTOR || titleSelector;
@@ -99,6 +101,9 @@ const getResultStatsSelector = (passedValue) =>
 
 const getResultCursorSelector = (passedValue) =>
   passedValue || FINDIUM_CURSOR_SELECTOR || cursorSelector;
+
+const getNextPageSelector = (passedValue) =>
+  passedValue || FINDIUM_NEXT_PAGE_SELECTOR || nextPageSelector;
 
 const logIt = (message, disableConsole) => {
   if (disableConsole) {
@@ -140,6 +145,7 @@ module.exports = {
   resultStatsSelector,
   getResultStatsSelector,
   getResultCursorSelector,
+  getNextPageSelector,
   logIt,
   saveToFile,
   saveResponse,

@@ -161,12 +161,12 @@ const getTestResults = (filePath) => {
 
 describe("getResults", () => {
   it("returns the correct number of results", () => {
-    const results = getTestResults("./data/miter-saws.html");
+    const results = getTestResults("./data/miter-saws.html.js");
     expect(results.length).toBe(9);
   });
 
   it("does not crash when results, result stats section, or cursor section of page are present", () => {
-    const results = getTestResults("./data/no-matching-documents.html");
+    const results = getTestResults("./data/no-matching-documents.html.js");
     expect(results.length).toBe(0);
   });
 });

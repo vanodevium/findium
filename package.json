@@ -1,6 +1,6 @@
 {
   "name": "findium",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A CLI and Node.js library for getting, displaying and store Google search results",
   "keywords": [
     "google",
