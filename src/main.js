@@ -1,3 +1,3 @@
-import findium from "./findium";
+import findium from "./findium.js";
 
-module.exports = findium;
+export default findium;

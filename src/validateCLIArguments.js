@@ -12,7 +12,7 @@ const validationMap = {
   [OUTPUT_ARG_MUST_BE_STRING]: getError("Output argument must be string"),
   [MUST_END_IN_JSON]: getError("Output argument must end in .json"),
   [ONLY_ONE_NOT_BOTH]: getError(
-    "Can only use --no-display when --output is used as well"
+    "Can only use --no-display when --output is used as well",
   ),
 };
 
@@ -36,4 +36,4 @@ function validateCLIArguments(args) {
   return error || result;
 }
 
-module.exports = validateCLIArguments;
+export default validateCLIArguments;

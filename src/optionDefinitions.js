@@ -46,4 +46,4 @@ const optionDefinitions = [
   { name: "exclude-sites", type: String },
 ];
 
-module.exports = optionDefinitions;
+export default optionDefinitions;

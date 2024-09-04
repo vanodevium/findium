@@ -1,13 +1,13 @@
-import { getNextPageSelector } from "./utils";
+import { readFile } from "fs";
+import axios from "axios";
+import querystring from "querystring";
+import * as cheerio from "cheerio";
+import open from "open";
+import("colors");
 
-const fs = require("fs");
-const request = require("axios");
-const querystring = require("querystring");
-const cheerio = require("cheerio");
-const openModule = require("open");
-require("colors");
+import { getNextPageSelector } from "./utils.js";
 
-const {
+import {
   getDefaultRequestOptions,
   getTitleSelector,
   getLinkSelector,
@@ -15,7 +15,7 @@ const {
   logIt,
   saveToFile,
   saveResponse,
-} = require("./utils");
+} from "./utils.js";
 
 export function errorTryingToOpen(error, stdout, stderr) {
   if (!error) {
@@ -27,12 +27,12 @@ export function errorTryingToOpen(error, stdout, stderr) {
   console.log(`stderr: ${stderr}`);
 }
 
-export function openInBrowser(open, results) {
-  if (open !== undefined) {
+export function openInBrowser(o, results) {
+  if (o !== undefined) {
     // open is the first X number of links to open
-    results.slice(0, open).forEach((result) => {
+    results.slice(0, o).forEach((result) => {
       try {
-        openModule(result.link);
+        open(result.link);
       } catch (e) {
         errorTryingToOpen(e);
       }
@@ -125,7 +125,7 @@ export function getResults({
   }
 
   const hasNextPage = !!$(getNextPageSelector(nextPageSelector)).find(
-    'a:contains(">")'
+    'a:contains(">")',
   ).length;
 
   const stats = {
@@ -166,10 +166,10 @@ export function getResponse({
 }) {
   return new Promise((resolve, reject) => {
     if (filePath) {
-      fs.readFile(filePath, (err, data) => {
+      readFile(filePath, (err, data) => {
         if (err) {
           return reject(
-            new Error(`Error accessing file at ${filePath}: ${err}`)
+            new Error(`Error accessing file at ${filePath}: ${err}`),
           );
         }
         return resolve({ body: data });
@@ -185,7 +185,8 @@ export function getResponse({
         includeSites,
         excludeSites,
       });
-      request({ ...defaultOptions, ...options })
+      axios
+        .request({ ...defaultOptions, ...options })
         .then((response) => {
           saveResponse(response, htmlFileOutputPath);
           return resolve({ body: response.data, response });
@@ -283,8 +284,8 @@ export default function findium(config) {
           reject(
             new Error(
               `Error in response: status ${status}. 
-              To see the raw response object, please set the 'diagnostics: true' (or -d if using command line)`
-            )
+              To see the raw response object, please set the 'diagnostics: true' (or -d if using command line)`,
+            ),
           );
         }
         saveToFile(output, results);

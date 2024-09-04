@@ -1,4 +1,4 @@
-import validateCLIArguments from "../lib/validateCLIArguments";
+import validateCLIArguments from "../src/validateCLIArguments.js";
 
 describe("Validate output file format", () => {
   describe("# -o 12345", () => {

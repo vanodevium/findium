@@ -1,5 +1,5 @@
 import commandLineArgs from "command-line-args";
-import parseCommandLineArgs from "../lib/parseCommandLineArgs";
+import parseCommandLineArgs from "../src/parseCommandLineArgs.js";
 
 jest.mock("command-line-args", () => jest.fn(() => ({ query: "foo" })));
 

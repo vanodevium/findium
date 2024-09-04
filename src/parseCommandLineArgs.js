@@ -1,5 +1,6 @@
-const commandLineArgs = require("command-line-args");
-const optionDefinitions = require("./optionDefinitions");
+import commandLineArgs from "command-line-args";
+
+import optionDefinitions from "./optionDefinitions.js";
 
 const parseCommandLineArgs = (argv) => {
   const cliOptions =
@@ -11,4 +12,4 @@ const parseCommandLineArgs = (argv) => {
   return cliOptions;
 };
 
-module.exports = parseCommandLineArgs;
+export default parseCommandLineArgs;

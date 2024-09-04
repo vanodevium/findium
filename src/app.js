@@ -1,11 +1,11 @@
 #! /usr/bin/env node
 
-const ora = require("ora");
+import ora from "ora";
+import parseCommandLineArgs from "./parseCommandLineArgs.js";
+import validateCLIArguments from "./validateCLIArguments.js";
+import findium from "./main.js";
 
 const preloader = ora({ text: "Loading results", color: "cyan" }).start();
-const parseCommandLineArgs = require("./parseCommandLineArgs");
-const validateCLIArguments = require("./validateCLIArguments");
-const findium = require("./main");
 
 const cliOptions = parseCommandLineArgs(process.argv);
 const validation = validateCLIArguments(cliOptions);

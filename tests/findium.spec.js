@@ -10,9 +10,9 @@ import {
   display,
   getResults,
   getResponse,
-} from "../lib/findium";
+} from "../src/findium.js";
 
-const utils = require("../lib/utils");
+import * as utils from "../src/utils.js";
 
 const { logIt } = utils;
 
@@ -23,8 +23,8 @@ global.console = {
 
 jest.mock("open", () => jest.fn(() => {}));
 
-jest.mock("../lib/utils", () => ({
-  ...jest.requireActual("../lib/utils"),
+jest.mock("../src/utils.js", () => ({
+  ...jest.requireActual("../src/utils.js"),
   logIt: jest.fn(() => {}),
 }));
 
@@ -134,7 +134,7 @@ describe("display", () => {
         { title: "b", link: "b", snippet: "b" },
       ],
       false,
-      false
+      false,
     );
     expect(logIt).toHaveBeenCalledTimes(9);
   });
@@ -147,7 +147,7 @@ describe("display", () => {
         { link: "b", snippet: "b" },
       ],
       false,
-      false
+      false,
     );
     expect(logIt).toHaveBeenCalledTimes(3);
   });

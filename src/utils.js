@@ -1,4 +1,4 @@
-const fs = require("fs");
+import writeFile from "fs";
 
 const {
   FINDIUM_TITLE_SELECTOR,
@@ -26,7 +26,7 @@ const defaultStart = 0;
 const getFullQuery = (
   query,
   includeSites = FINDIUM_INCLUDE_SITES,
-  excludeSites = FINDIUM_EXCLUDE_SITES
+  excludeSites = FINDIUM_EXCLUDE_SITES,
 ) => {
   if (includeSites === "" && excludeSites === "") {
     return query;
@@ -115,7 +115,7 @@ const logIt = (message, disableConsole) => {
 
 const saveToFile = (output, results) => {
   if (output !== undefined) {
-    fs.writeFile(output, JSON.stringify(results, null, 2), "utf8", (err) => {
+    writeFile(output, JSON.stringify(results, null, 2), "utf8", (err) => {
       if (err) {
         console.error(`Error writing to file ${output}: ${err}`);
       }
@@ -125,13 +125,13 @@ const saveToFile = (output, results) => {
 
 const saveResponse = (response, htmlFileOutputPath) => {
   if (htmlFileOutputPath) {
-    fs.writeFile(htmlFileOutputPath, response.data, () => {
+    writeFile(htmlFileOutputPath, response.data, () => {
       console.log(`Html file saved to ${htmlFileOutputPath}`);
     });
   }
 };
 
-module.exports = {
+export {
   defaultUserAgent,
   defaultLimit,
   defaultStart,

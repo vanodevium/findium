@@ -17,7 +17,7 @@ import {
   saveToFile,
   saveResponse,
   getFullQuery,
-} from "../lib/utils";
+} from "../src/utils.js";
 
 global.console = {
   log: jest.fn(),
